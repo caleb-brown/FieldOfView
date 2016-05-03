@@ -19,7 +19,7 @@ public class FOV : MonoBehaviour {
     public int edgeResolveIterations;
     public float edgeDistanceThreshold;
 
-    public float maskCutawayDist = .1f;
+    public float maskCutawayDist = .5f;
 
     public MeshFilter viewMeshFilter;
     Mesh viewMesh;
