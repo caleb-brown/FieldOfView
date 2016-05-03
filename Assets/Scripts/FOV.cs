@@ -35,7 +35,7 @@ public class FOV : MonoBehaviour {
 		}
 	}
 
-	void Update ()
+	void LateUpdate ()
 	{
 		DrawFieldOfView ();
 	}
@@ -62,10 +62,10 @@ public class FOV : MonoBehaviour {
 	{
 		int stepCount = Mathf.RoundToInt(viewAngle * meshResolution);
 		float stepAngleSize = viewAngle / stepCount;
-
 		List<Vector3> viewPoints = new List<Vector3> ();
 
-		for (int i = 0; i <= stepCount; i++) {
+		for (int i = 0; i <= stepCount; i++)
+        {
 			float angle = transform.eulerAngles.y - viewAngle / 2 + stepAngleSize * i;
 			ViewCastInfo newViewCast = ViewCast (angle);
 			viewPoints.Add (newViewCast.point);
@@ -102,7 +102,7 @@ public class FOV : MonoBehaviour {
 		if (Physics.Raycast (transform.position, dir, out hit, viewRadius, obstacleMask))
 			return new ViewCastInfo (true, hit.point, hit.distance, globalAngle);
 		else
-			return new ViewCastInfo (false, transform.position + dir * viewAngle, viewRadius, globalAngle);
+			return new ViewCastInfo (false, transform.position + dir * viewRadius, viewRadius, globalAngle);
 	}
 
 	public Vector3 DirFromAngle(float angleInDegrees, bool angleIsGlobal)
