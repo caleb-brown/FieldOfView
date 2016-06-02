@@ -40,8 +40,8 @@ public class Controller : MonoBehaviour
 
 #if UNITY_ANDROID || UNITY_IOS
 
-        // Vector3 mPos = viewCamera.ScreenToWorldPoint(new Vector3(CrossPlatformInputManager.GetAxis("Horizontal"), CrossPlatformInputManager.GetAxis("Vertical"), viewCamera.transform.position.y));
-        Vector3 mPos = viewCamera.ScreenToWorldPoint(new Vector3(CrossPlatformInputManager.GetAxis("Mouse_X"), CrossPlatformInputManager.GetAxis("Mouse_Y"), viewCamera.transform.position.y));
+        Vector3 mPos = viewCamera.ScreenToWorldPoint(new Vector3(CrossPlatformInputManager.GetAxis("Horizontal"), CrossPlatformInputManager.GetAxis("Vertical"), viewCamera.transform.position.y));
+        // Vector3 mPos = viewCamera.ScreenToWorldPoint(new Vector3(CrossPlatformInputManager.GetAxisRaw("Mouse_X"), CrossPlatformInputManager.GetAxisRaw("Mouse_Y"), viewCamera.transform.position.y));
         transform.LookAt(mPos + Vector3.up * transform.position.y);
         velocity = new Vector3(CrossPlatformInputManager.GetAxisRaw("Horizontal"), 0, CrossPlatformInputManager.GetAxisRaw("Vertical")).normalized * moveSpeed;
 
