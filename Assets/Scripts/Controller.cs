@@ -11,6 +11,7 @@ using System.Collections;
 public class Controller : MonoBehaviour
 {
 	public float moveSpeed = 6;
+    public float lookSpeed = 1000.0f;
 
 #if UNITY_ANDROID || UNITY_IOS
 
@@ -39,7 +40,7 @@ public class Controller : MonoBehaviour
             Application.Quit();
 
 		Vector3 mPos = viewCamera.ScreenToWorldPoint (new Vector3 (Input.mousePosition.x, Input.mousePosition.y, viewCamera.transform.position.y));
-        Debug.Log(Input.mousePosition.x);
+        Debug.Log(mPos);
 		transform.LookAt(mPos + Vector3.up * transform.position.y);
 		velocity = new Vector3 (Input.GetAxisRaw ("Horizontal"), 0, Input.GetAxisRaw ("Vertical")).normalized * moveSpeed;
         
@@ -47,19 +48,13 @@ public class Controller : MonoBehaviour
 
 #if UNITY_ANDROID || UNITY_IOS
 
-        // Vector3 mPos = viewCamera.ScreenToWorldPoint(new Vector3(CrossPlatformInputManager.GetAxis("Horizontal"), CrossPlatformInputManager.GetAxis("Vertical"), viewCamera.transform.position.y));
-        // Vector3 mPos = viewCamera.ScreenToWorldPoint(new Vector3(CrossPlatformInputManager.GetAxisRaw("Mouse_X"), CrossPlatformInputManager.GetAxisRaw("Mouse_Y"), viewCamera.transform.position.y));
-        // transform.LookAt(mPos + Vector3.up * transform.position.y);
-        // velocity = new Vector3(CrossPlatformInputManager.GetAxisRaw("Horizontal"), 0, CrossPlatformInputManager.GetAxisRaw("Vertical")).normalized * moveSpeed;
-
-        Vector3 mPos = viewCamera.ScreenToWorldPoint(new Vector3(lookJoystick.Horizontal() * 1000, lookJoystick.Vertical() * 1000, viewCamera.transform.position.y));
-        // Debug.Log(lookJoystick.Horizontal() * 100);
+        Vector3 mPos = viewCamera.ScreenToWorldPoint(new Vector3(lookJoystick.Horizontal() * lookSpeed, lookJoystick.Vertical() * lookSpeed, viewCamera.transform.position.y));
+        Debug.Log(mPos);
         transform.LookAt(mPos + Vector3.up * transform.position.y);
         velocity = new Vector3(movementJoystick.Horizontal(), 0, movementJoystick.Vertical()).normalized * moveSpeed;
-        Debug.Log(velocity);
+        // Debug.Log(velocity);
 
 #endif
-
     }
 
 	void FixedUpdate()
