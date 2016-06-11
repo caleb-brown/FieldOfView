@@ -12,8 +12,12 @@ public class Controller : MonoBehaviour
 {
 	public float moveSpeed = 6;
 
-    public VirtualJoystick virtualJoystick;
+#if UNITY_ANDROID || UNITY_IOS
 
+    public VirtualJoystick movementJoystick;
+    public VirtualJoystick lookJoystick;
+
+#endif
     Camera viewCamera;
 	
     Rigidbody rigidBody;
@@ -35,6 +39,7 @@ public class Controller : MonoBehaviour
             Application.Quit();
 
 		Vector3 mPos = viewCamera.ScreenToWorldPoint (new Vector3 (Input.mousePosition.x, Input.mousePosition.y, viewCamera.transform.position.y));
+        Debug.Log(Input.mousePosition.x);
 		transform.LookAt(mPos + Vector3.up * transform.position.y);
 		velocity = new Vector3 (Input.GetAxisRaw ("Horizontal"), 0, Input.GetAxisRaw ("Vertical")).normalized * moveSpeed;
         
@@ -47,9 +52,10 @@ public class Controller : MonoBehaviour
         // transform.LookAt(mPos + Vector3.up * transform.position.y);
         // velocity = new Vector3(CrossPlatformInputManager.GetAxisRaw("Horizontal"), 0, CrossPlatformInputManager.GetAxisRaw("Vertical")).normalized * moveSpeed;
 
-        // Vector3 mPos = viewCamera.ScreenToWorldPoint(new Vector3(virtualJoystick.Horizontal(), virtualJoystick.Vertical(), viewCamera.transform.position.y));
-        // transform.LookAt(mPos + Vector3.up * transform.position.y);
-        velocity = new Vector3(virtualJoystick.Horizontal(), 0, virtualJoystick.Vertical()).normalized * moveSpeed;
+        Vector3 mPos = viewCamera.ScreenToWorldPoint(new Vector3(lookJoystick.Horizontal() * 1000, lookJoystick.Vertical() * 1000, viewCamera.transform.position.y));
+        // Debug.Log(lookJoystick.Horizontal() * 100);
+        transform.LookAt(mPos + Vector3.up * transform.position.y);
+        velocity = new Vector3(movementJoystick.Horizontal(), 0, movementJoystick.Vertical()).normalized * moveSpeed;
         Debug.Log(velocity);
 
 #endif

@@ -21,20 +21,14 @@ public class VirtualJoystick : MonoBehaviour, IDragHandler, IPointerUpHandler, I
 
         if (RectTransformUtility.ScreenPointToLocalPointInRectangle(bgImg.rectTransform, ped.position, ped.pressEventCamera, out pos))
         {
-            // Debug.Log("Hey");
             pos.x = (pos.x / bgImg.rectTransform.sizeDelta.x);
             pos.y = (pos.y / bgImg.rectTransform.sizeDelta.y);
-
-            // Mathf.Clamp(pos.x, -1.0f, 1.0f);
-            // Mathf.Clamp(pos.y, -1.0f, 1.0f);
-
+            
             inputVector = new Vector3(pos.x * 2 + 1, 0, pos.y * 2 - 1);
             inputVector = (inputVector.magnitude > 1.0f) ? inputVector.normalized : inputVector;
 
             // Move Joystick IMG
             joystickImg.rectTransform.anchoredPosition = new Vector3(inputVector.x * (bgImg.rectTransform.sizeDelta.x / 3), inputVector.z * (bgImg.rectTransform.sizeDelta.y / 3));
-
-            // Debug.Log(inputVector);
         }
     }
 
@@ -64,4 +58,14 @@ public class VirtualJoystick : MonoBehaviour, IDragHandler, IPointerUpHandler, I
         else
             return Input.GetAxisRaw("Vertical");
     }
+
+    /*public float MouseX()
+    {
+
+    }
+
+    public float MouseY()
+    {
+
+    }*/
 }
