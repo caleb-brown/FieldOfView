@@ -3,7 +3,7 @@ using System.Collections;
 
 #if UNITY_ANDROID || UNITY_IOS
     
-using UnityStandardAssets.CrossPlatformInput;
+// using UnityStandardAssets.CrossPlatformInput;
     
 #endif
 
@@ -11,6 +11,8 @@ using UnityStandardAssets.CrossPlatformInput;
 public class Controller : MonoBehaviour
 {
 	public float moveSpeed = 6;
+
+    public VirtualJoystick virtualJoystick;
 
     Camera viewCamera;
 	
@@ -40,10 +42,15 @@ public class Controller : MonoBehaviour
 
 #if UNITY_ANDROID || UNITY_IOS
 
-        Vector3 mPos = viewCamera.ScreenToWorldPoint(new Vector3(CrossPlatformInputManager.GetAxis("Horizontal"), CrossPlatformInputManager.GetAxis("Vertical"), viewCamera.transform.position.y));
+        // Vector3 mPos = viewCamera.ScreenToWorldPoint(new Vector3(CrossPlatformInputManager.GetAxis("Horizontal"), CrossPlatformInputManager.GetAxis("Vertical"), viewCamera.transform.position.y));
         // Vector3 mPos = viewCamera.ScreenToWorldPoint(new Vector3(CrossPlatformInputManager.GetAxisRaw("Mouse_X"), CrossPlatformInputManager.GetAxisRaw("Mouse_Y"), viewCamera.transform.position.y));
-        transform.LookAt(mPos + Vector3.up * transform.position.y);
-        velocity = new Vector3(CrossPlatformInputManager.GetAxisRaw("Horizontal"), 0, CrossPlatformInputManager.GetAxisRaw("Vertical")).normalized * moveSpeed;
+        // transform.LookAt(mPos + Vector3.up * transform.position.y);
+        // velocity = new Vector3(CrossPlatformInputManager.GetAxisRaw("Horizontal"), 0, CrossPlatformInputManager.GetAxisRaw("Vertical")).normalized * moveSpeed;
+
+        // Vector3 mPos = viewCamera.ScreenToWorldPoint(new Vector3(virtualJoystick.Horizontal(), virtualJoystick.Vertical(), viewCamera.transform.position.y));
+        // transform.LookAt(mPos + Vector3.up * transform.position.y);
+        velocity = new Vector3(virtualJoystick.Horizontal(), 0, virtualJoystick.Vertical()).normalized * moveSpeed;
+        Debug.Log(velocity);
 
 #endif
 
