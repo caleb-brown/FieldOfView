@@ -3,7 +3,8 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using System.Collections;
 
-public class VirtualJoystick : MonoBehaviour, IDragHandler, IPointerUpHandler, IPointerDownHandler {
+public class VirtualLookJoystick : MonoBehaviour, IDragHandler, IPointerUpHandler, IPointerDownHandler
+{
 
     Image bgImg;
     Image joystickImg;
@@ -23,7 +24,7 @@ public class VirtualJoystick : MonoBehaviour, IDragHandler, IPointerUpHandler, I
         {
             pos.x = (pos.x / bgImg.rectTransform.sizeDelta.x);
             pos.y = (pos.y / bgImg.rectTransform.sizeDelta.y);
-            
+
             inputVector = new Vector3(pos.x * 2 + 1, 0, pos.y * 2 - 1);
             inputVector = (inputVector.magnitude > 1.0f) ? inputVector.normalized : inputVector;
 
@@ -39,7 +40,7 @@ public class VirtualJoystick : MonoBehaviour, IDragHandler, IPointerUpHandler, I
 
     public virtual void OnPointerUp(PointerEventData ped)
     {
-        inputVector = Vector3.zero;
+        // inputVector = Vector3.zero;
         joystickImg.rectTransform.anchoredPosition = Vector3.zero;
     }
 
