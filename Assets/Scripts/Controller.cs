@@ -49,8 +49,9 @@ public class Controller : MonoBehaviour
 #if UNITY_ANDROID || UNITY_IOS
 
         Vector3 mPos = viewCamera.ScreenToWorldPoint(new Vector3(lookJoystick.Horizontal() * lookSpeed, lookJoystick.Vertical() * lookSpeed, viewCamera.transform.position.y));
-        Debug.Log(mPos);
+        // Debug.Log(mPos);
         transform.LookAt(mPos + Vector3.up * transform.position.y);
+        Debug.Log(mPos + Vector3.up * transform.position.y);
         velocity = new Vector3(movementJoystick.Horizontal(), 0, movementJoystick.Vertical()).normalized * moveSpeed;
         // Debug.Log(velocity);
 
