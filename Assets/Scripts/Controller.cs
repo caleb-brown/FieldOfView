@@ -15,8 +15,9 @@ public class Controller : MonoBehaviour
 
 #if UNITY_ANDROID || UNITY_IOS
 
-    public VirtualJoystick movementJoystick;
-    public VirtualLookJoystick lookJoystick;
+    // public VirtualJoystick movementJoystick;
+    // public VirtualJoystick lookJoystick;
+    public VirtualJoystick VirtualJoystick;
 
 #endif
     Camera viewCamera;
@@ -48,11 +49,11 @@ public class Controller : MonoBehaviour
 
 #if UNITY_ANDROID || UNITY_IOS
 
-        Vector3 mPos = viewCamera.ScreenToWorldPoint(new Vector3(lookJoystick.Horizontal() * lookSpeed, lookJoystick.Vertical() * lookSpeed, viewCamera.transform.position.y));
+        Vector3 mPos = viewCamera.ScreenToWorldPoint(new Vector3(VirtualJoystick.Horizontal() * lookSpeed, VirtualJoystick.Vertical() * lookSpeed, viewCamera.transform.position.y));
         // Debug.Log(mPos);
         transform.LookAt(mPos + Vector3.up * transform.position.y);
         // Debug.Log(mPos + Vector3.up * transform.position.y);
-        velocity = new Vector3(movementJoystick.Horizontal(), 0, movementJoystick.Vertical()).normalized * moveSpeed;
+        velocity = new Vector3(VirtualJoystick.Horizontal(), 0, VirtualJoystick.Vertical()).normalized * moveSpeed;
         // Debug.Log(velocity);
 
 #endif
