@@ -8,6 +8,7 @@ public class VirtualJoystick : MonoBehaviour, IDragHandler, IPointerUpHandler, I
     Image bgImg;
     Image joystickImg;
     Vector3 inputVector;
+    Vector3 zeroVector;
 
     void Start()
     {
@@ -40,6 +41,7 @@ public class VirtualJoystick : MonoBehaviour, IDragHandler, IPointerUpHandler, I
 
     public virtual void OnPointerUp(PointerEventData ped)
     {
+        zeroVector = inputVector;
         inputVector = Vector3.zero;
         joystickImg.rectTransform.anchoredPosition = Vector3.zero;
     }
