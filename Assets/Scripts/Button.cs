@@ -9,18 +9,20 @@ namespace TestScene
 
         public Color defaultColor;
         public Color selectColor;
-        public float moveSpeed = 6.0f;
+        public float moveSpeed = 6.0f, deadZone = 1.0f;
 
         Material mat;
         Camera viewCamera;
         Rigidbody rb;
         Vector3 velocity;
+        Vector3 rotation;
 
         void Awake()
         {
             mat = GetComponent<Renderer>().material;
             rb = GetComponent<Rigidbody>();
             viewCamera = Camera.main;
+            rotation = new Vector3();
         }
 
         void FixedUpdate()
@@ -38,16 +40,14 @@ namespace TestScene
         public void OnTouch(Vector3 pos)
         {
             mat.color = selectColor;
-
-            Vector3 mPos = viewCamera.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0.0f));
-            transform.LookAt(mPos + Vector3.up * transform.position.y * Time.deltaTime);
-            velocity = new Vector3(pos.x, pos.y, 0.0f).normalized * moveSpeed;
-            Debug.DrawRay(transform.position, velocity);
-        }
-
-        void OnTouchExit()
-        {
-            mat.color = defaultColor;
+            Vector3 bVector = new Vector3(pos.x - transform.position.x, 0.0f, pos.z - transform.position.z);
+            // Debug.DrawRay(transform.position, bVector, Color.red);
+            transform.rotation = Quaternion.LookRotation(bVector + Vector3.right * transform.position.z * Time.deltaTime);
+            velocity = new Vector3(bVector.x, 0.0f, bVector.z).normalized * moveSpeed;
+            if (bVector.magnitude <= deadZone)
+            {
+                velocity = Vector3.zero;
+            }
         }
     }
 }

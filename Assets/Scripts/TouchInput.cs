@@ -18,6 +18,7 @@ namespace TestScene
                 if (Input.GetMouseButton(0))
                 {
                     player.OnTouch(pos);
+                    // Debug.DrawRay(transform.position, pos);
                 }
                 if (Input.GetMouseButtonUp(0))
                 {
