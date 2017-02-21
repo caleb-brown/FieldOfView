@@ -6,7 +6,7 @@ public class BasicTouchInput : MonoBehaviour
 {
     public BasicTouchController player;
 
-    Vector3 touchPos;
+    Vector3 touchPos, movePos;
 
     void Update()
     {
@@ -24,15 +24,18 @@ public class BasicTouchInput : MonoBehaviour
             if (Input.GetMouseButton(0))
             {
                 Vector3 mousePosInWorldSpace = GetComponent<Camera>().ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, Mathf.Abs(GetComponent<Camera>().transform.position.y)));
-                Vector3 movePos = mousePosInWorldSpace - touchPos;
+                movePos = mousePosInWorldSpace - touchPos;
 
-                player.OnTouch(movePos);
-                Debug.DrawLine(touchPos, mousePosInWorldSpace);
+                Debug.DrawLine(touchPos, movePos);
+                Debug.Log(string.Format("touchPos: {0}, mousePosInWorldSpace: {1}, movePos: {2}", touchPos, mousePosInWorldSpace, movePos));
                 // Debug.DrawRay(transform.position, movePos, Color.magenta);
                 // Debug.DrawRay(touchPos, mousePosInWorldSpace, Color.blue);
                 // Debug.DrawRay(transform.position, touchPos);
                 // Debug.Log((touchPos + movePos).magnitude);
+
+                player.OnTouch(movePos);
             }
+
             if (Input.GetMouseButtonUp(0))
             {
                 Debug.Log("TouchPhase.Ended");
@@ -52,6 +55,7 @@ public class BasicTouchInput : MonoBehaviour
                 {
                     player.OnTouch(pos);
                 }
+
                 if (touch.phase == TouchPhase.Ended || touch.phase == TouchPhase.Canceled)
                 {
                     Debug.Log("TouchPhase.Ended");
